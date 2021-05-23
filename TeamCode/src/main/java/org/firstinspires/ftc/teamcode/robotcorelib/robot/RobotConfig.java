@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.robotcorelib.robot;
 import org.firstinspires.ftc.teamcode.robotcorelib.drive.StandardTrackingWheelLocalizer;
 import org.firstinspires.ftc.teamcode.robotcorelib.util.Subsystem;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 
 import java.util.ArrayList;
 
@@ -15,11 +17,16 @@ public class RobotConfig {
 
     //Subsystem objects go here
     public Drivetrain drivetrain;
+    public Intake intake;
+    public Shooter shooter;
 
     //initialization of subsystems goes here
     public void init() {
         localizer = new StandardTrackingWheelLocalizer(Robot.getHardwareMap());
         drivetrain = new Drivetrain();
+        intake = new Intake();
+        shooter = new Shooter();
+
     }
 
 }
