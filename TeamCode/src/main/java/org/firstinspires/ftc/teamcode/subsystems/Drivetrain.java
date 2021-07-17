@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.robotcorelib.util.Subsystem;
 
@@ -37,5 +38,11 @@ public class Drivetrain extends Subsystem {
         this.br.setPower(br);
     }
 
+    public void setDrivetrainMode(DcMotor.RunMode runMode) {
+        fl.setMode(runMode);
+        fr.setMode(runMode);
+        bl.setMode(runMode);
+        br.setMode(runMode);
+    }
 
 }
