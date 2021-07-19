@@ -18,17 +18,17 @@ public class Drivetrain extends Subsystem {
         br = hardwareMap.dcMotor.get("back_right");
 
         setDrivetrainMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        setDrivetrainMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        setDrivetrainMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-        fl.setDirection(DcMotorSimple.Direction.REVERSE);
-        fr.setDirection(DcMotorSimple.Direction.FORWARD);
-        bl.setDirection(DcMotorSimple.Direction.REVERSE);
-        br.setDirection(DcMotorSimple.Direction.FORWARD);
+        fl.setDirection(DcMotorSimple.Direction.FORWARD);
+        fr.setDirection(DcMotorSimple.Direction.REVERSE);
+        bl.setDirection(DcMotorSimple.Direction.FORWARD);
+        br.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void setPower(double fl, double fr, double bl, double br) {
