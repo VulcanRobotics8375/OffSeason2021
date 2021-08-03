@@ -31,22 +31,31 @@ public class Drivetrain extends Subsystem {
         br.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    public void setPower(double fl, double fr, double bl, double br) {
+    public void setPowers(double fl, double fr, double bl, double br) {
         this.fl.setPower(fl);
         this.fr.setPower(fr);
         this.bl.setPower(bl);
         this.br.setPower(br);
     }
 
+
     public void mechanumDrive(double forward, double strafe, double turn) {
-        double theta = Math.atan2(forward, strafe) - Math.PI/4.0;
+        double theta = Math.atan2(forward, strafe) - Math.PI / 4.0;
         // Godly Math Trick: sin(x+pi/4) = cos(x-pi/4)
         double speed = Math.hypot(strafe, forward);
         double flSpeed = speed * Math.sin(theta) + turn;
-        double frSpeed = speed * Math.cos(theta) - turn ;
+        double frSpeed = speed * Math.cos(theta) - turn;
         double blSpeed = speed * Math.sin(theta) + turn;
         double brSpeed = speed * Math.cos(theta) - turn;
-        setPower(flSpeed, frSpeed, blSpeed, brSpeed);
+        setPowers(flSpeed, frSpeed, blSpeed, brSpeed);
+    }
+
+    public void setPowers(double[] powers) {
+        this.fl.setPower(powers[0]);
+        this.fl.setPower(powers[1]);
+        this.fl.setPower(powers[2]);
+        this.fl.setPower(powers[3]);
+
     }
 
     public void setDrivetrainMode(DcMotor.RunMode runMode) {
@@ -55,5 +64,4 @@ public class Drivetrain extends Subsystem {
         bl.setMode(runMode);
         br.setMode(runMode);
     }
-
 }
