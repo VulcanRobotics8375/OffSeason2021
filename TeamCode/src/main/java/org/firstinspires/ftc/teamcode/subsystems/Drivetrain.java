@@ -38,6 +38,17 @@ public class Drivetrain extends Subsystem {
         this.br.setPower(br);
     }
 
+    public void mechanumDrive(double forward, double strafe, double turn) {
+        double theta = Math.atan2(forward, strafe) - Math.PI/4.0;
+        // Godly Math Trick: sin(x+pi/4) = cos(x-pi/4)
+        double speed = Math.hypot(strafe, forward);
+        double flSpeed = speed * Math.sin(theta) + turn;
+        double frSpeed = speed * Math.cos(theta) - turn ;
+        double blSpeed = speed * Math.sin(theta) + turn;
+        double brSpeed = speed * Math.cos(theta) - turn;
+        setPower(flSpeed, frSpeed, blSpeed, brSpeed);
+    }
+
     public void setDrivetrainMode(DcMotor.RunMode runMode) {
         fl.setMode(runMode);
         fr.setMode(runMode);
