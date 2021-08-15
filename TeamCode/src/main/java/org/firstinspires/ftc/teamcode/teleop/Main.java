@@ -24,7 +24,10 @@ public class Main extends TeleOpPipeline {
         Pose2d robotPose = Robot.getRobotPose();
 
         subsystems.drivetrain.mechanumDrive(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-        subsystems.intake.run(gamepad2.a);
+        subsystems.intake.run(
+                gamepad2.a, //intake
+                gamepad2.b //outtake
+        );
 
         telemetry.addData("left", Robot.getConfiguration().localizer.getWheelPositions().get(0));
         telemetry.addData("right", Robot.getConfiguration().localizer.getWheelPositions().get(1));
