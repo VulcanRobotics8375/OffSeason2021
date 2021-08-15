@@ -45,8 +45,8 @@ public class Drivetrain extends Subsystem {
         double speed = Math.hypot(strafe, forward);
         double flSpeed = speed * Math.sin(theta) + turn;
         double frSpeed = speed * Math.cos(theta) - turn;
-        double blSpeed = speed * Math.sin(theta) + turn;
-        double brSpeed = speed * Math.cos(theta) - turn;
+        double blSpeed = speed * Math.cos(theta) + turn;
+        double brSpeed = speed * Math.sin(theta) - turn;
         setPowers(flSpeed, frSpeed, blSpeed, brSpeed);
     }
 
