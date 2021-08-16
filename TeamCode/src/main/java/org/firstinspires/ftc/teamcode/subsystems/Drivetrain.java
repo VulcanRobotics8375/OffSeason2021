@@ -42,7 +42,8 @@ public class Drivetrain extends Subsystem {
     public void mechanumDrive(double forward, double strafe, double turn) {
         double theta = Math.atan2(forward, strafe) - Math.PI / 4.0;
         // Godly Math Trick: sin(x+pi/4) = cos(x-pi/4)
-        double speed = Math.hypot(strafe, forward);
+        double hyp = Math.hypot(strafe, forward);
+        double speed = (hyp/1.07)*(0.62*Math.pow(hyp, 2)+0.45);
         double flSpeed = speed * Math.sin(theta) + turn;
         double frSpeed = speed * Math.cos(theta) - turn;
         double blSpeed = speed * Math.cos(theta) + turn;
