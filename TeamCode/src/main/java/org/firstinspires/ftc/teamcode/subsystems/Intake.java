@@ -6,8 +6,8 @@ import org.firstinspires.ftc.teamcode.robotcorelib.util.Subsystem;
 
 public class Intake extends Subsystem {
     private DcMotor intake;
-    private boolean buttonIntake;
-    private boolean buttonOuttake;
+
+    private double intakePower;
 
     public void init(){
         intake = hardwareMap.dcMotor.get("intake");
