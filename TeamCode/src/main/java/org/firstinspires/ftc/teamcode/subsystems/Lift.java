@@ -7,7 +7,12 @@ import org.firstinspires.ftc.teamcode.robotcorelib.util.Subsystem;
 
 public class Lift extends Subsystem {
     private DcMotor lift;
-    public double stickPower;
+    private double stickPower;
+
+    private final double CONVERSION_SPEED = 0.01;
+    private final int LIMIT_RANGE = 800;
+    private final int MAX_HEIGHT = 3000;
+    private final int L_HIGH = MAX_HEIGHT - LIMIT_RANGE;
 
 
     public void init(){
@@ -16,7 +21,41 @@ public class Lift extends Subsystem {
     }
 
     public void run(double stickPower) {
+        int pos = lift.getCurrentPosition();
+        double outputPower;
+
+        // Sigmoid
+//        if(stickPower > 0) {
+//            outputPower = stickPower / (1 + Math.exp(CONVERSION_SPEED * (pos - (MAX_HEIGHT - (LIMIT_RANGE / 2.0)))));
+//        } else if(stickPower < 0) {
+//            outputPower = stickPower / (1 + Math.exp(CONVERSION_SPEED * (LIMIT_RANGE/2.0 - pos)));
+//        } else {
+//            outputPower = 0;
+//        }
+
+        // Trapezoidal/Linear
+        if(stickPower > 0) {
+            if(pos < L_HIGH) {
+                outputPower = stickPower;
+            }    else {
+                outputPower = stickPower - (stickPower / LIMIT_RANGE) * (pos - L_HIGH);
+            }
+        } else if(stickPower < 0) {
+            if(pos < LIMIT_RANGE) {
+                outputPower = (stickPower / LIMIT_RANGE) * pos;
+            } else {
+                outputPower = stickPower;
+            }
+        } else {
+            outputPower = 0;
+        }
+        
+        lift.setPower(outputPower);
+    }
+
+    public void test(double stickPower) {
         lift.setPower(stickPower);
     }
+
 
 }
