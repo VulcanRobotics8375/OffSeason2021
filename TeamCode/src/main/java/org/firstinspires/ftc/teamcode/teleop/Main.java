@@ -28,6 +28,7 @@ public class Main extends TeleOpPipeline {
                 gamepad2.a, //intake
                 gamepad2.b //outtake
         );
+        subsystems.lift.run(-gamepad2.left_stick_y);
 
         telemetry.addData("left", Robot.getConfiguration().localizer.getWheelPositions().get(0));
         telemetry.addData("right", Robot.getConfiguration().localizer.getWheelPositions().get(1));
