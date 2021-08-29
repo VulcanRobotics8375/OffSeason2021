@@ -21,9 +21,9 @@ public class Lift extends Subsystem {
     private final int MAX_HEIGHT = 6000;
     private final int L_HIGH = MAX_HEIGHT - LIMIT_RANGE;
 
-    private final double CLOSED_POS = 0.1;
-    private final double OPENED_POS = 0.9;
-    private boolean open = true;
+    private final double CLOSED_POS = 1.0;
+    private final double OPENED_POS = 0.5;
+    private boolean open = false;
     private boolean buttonPress = false;
 
 
