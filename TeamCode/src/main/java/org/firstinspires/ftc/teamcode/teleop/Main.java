@@ -30,12 +30,12 @@ public class Main extends TeleOpPipeline {
         );
         subsystems.lift.run(-gamepad2.left_stick_y);
 
-        telemetry.addData("left", Robot.getConfiguration().localizer.getWheelPositions().get(0));
-        telemetry.addData("right", Robot.getConfiguration().localizer.getWheelPositions().get(1));
-        telemetry.addData("strafe", Robot.getConfiguration().localizer.getWheelPositions().get(2));
-        telemetry.addData("x", robotPose.getX());
-        telemetry.addData("y", robotPose.getY());
-        telemetry.addData("heading", robotPose.getHeading());
+//        telemetry.addData("left", Robot.getConfiguration().localizer.getWheelPositions().get(0));
+//        telemetry.addData("right", Robot.getConfiguration().localizer.getWheelPositions().get(1));
+//        telemetry.addData("strafe", Robot.getConfiguration().localizer.getWheelPositions().get(2));
+//        telemetry.addData("x", robotPose.getX());
+//        telemetry.addData("y", robotPose.getY());
+//        telemetry.addData("heading", robotPose.getHeading());
 
         telemetry.update();
 
