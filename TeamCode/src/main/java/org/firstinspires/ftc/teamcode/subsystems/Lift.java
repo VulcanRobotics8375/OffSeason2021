@@ -58,23 +58,6 @@ public class Lift extends Subsystem {
 //            outputPower = 0;
         }
 
-        // Trapezoidal/Linear
-//        if(stickPower > 0) {
-//            if(pos < L_HIGH) {
-//                outputPower = stickPower;
-//            }    else {
-//                outputPower = stickPower - (stickPower / LIMIT_RANGE) * (pos - L_HIGH);
-//            }
-//        } else if(stickPower < 0) {
-//            if(pos < LIMIT_RANGE) {
-//                outputPower = (stickPower / LIMIT_RANGE) * pos;
-//            } else {
-//                outputPower = stickPower;
-//            }
-//        } else {
-//            outputPower = 0;
-//        }
-        
         lift.setPower(outputPower);
         if(buttonPress && !this.buttonPress) {
             this.buttonPress = true;
