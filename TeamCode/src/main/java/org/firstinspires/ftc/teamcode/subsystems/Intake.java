@@ -6,11 +6,9 @@ import org.firstinspires.ftc.teamcode.robotcorelib.util.Subsystem;
 
 public class Intake extends Subsystem {
     private DcMotor intake;
-    private boolean buttonIntake;
-    private boolean buttonOuttake;
 
     public void init(){
-        intake = hardwareMap.dcMotor.get("intake");
+        intake = hardwareMap.dcMotor.get("odo_right");
     }
 
     public void run(boolean buttonIntake, boolean buttonOuttake){
