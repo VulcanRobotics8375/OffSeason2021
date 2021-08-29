@@ -1,12 +1,16 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robotcorelib.util.Subsystem;
 
 public class Lift extends Subsystem {
     private DcMotor lift;
+    private Servo release;
     private double stickPower;
 
     private final double CONVERSION_SPEED = 0.03;
@@ -14,15 +18,21 @@ public class Lift extends Subsystem {
     private final int MAX_HEIGHT = 6000;
     private final int L_HIGH = MAX_HEIGHT - LIMIT_RANGE;
 
+    private final double CLOSED_POS = 0.1;
+    private final double OPENED_POS = 0.9;
+    private boolean open = true;
+    private boolean buttonPress = false;
+
 
     public void init(){
+        release = hardwareMap.servo.get("release");
         lift = hardwareMap.dcMotor.get("lift");
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lift.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
-    public void run(double stickPower) {
+    public void run(double stickPower, boolean buttonPress) {
         int pos = lift.getCurrentPosition();
         double outputPower;
 
@@ -53,6 +63,18 @@ public class Lift extends Subsystem {
 //        }
         
         lift.setPower(outputPower);
+        if(buttonPress && !this.buttonPress) {
+            this.buttonPress = true;
+            open = !open;
+        }
+        if(!buttonPress && this.buttonPress) {
+            this.buttonPress = false;
+        }
+        if(open) {
+            release.setPosition(OPENED_POS);
+        } else {
+            release.setPosition(CLOSED_POS);
+        }
     }
 
     public void test(double stickPower) {
