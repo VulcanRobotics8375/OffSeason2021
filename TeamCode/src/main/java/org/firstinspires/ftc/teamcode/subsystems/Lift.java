@@ -12,9 +12,12 @@ public class Lift extends Subsystem {
     private DcMotor lift;
     private Servo release;
     private double stickPower;
+    private boolean hold = false;
+    private int holdPosition;
+    private final double HOLD_POS_GAIN = 0.01;
 
-    private final double CONVERSION_SPEED = 0.03;
-    private final int LIMIT_RANGE = 200;
+    private final double CONVERSION_SPEED = 0.02;
+    private final int LIMIT_RANGE = 400;
     private final int MAX_HEIGHT = 6000;
     private final int L_HIGH = MAX_HEIGHT - LIMIT_RANGE;
 
@@ -38,11 +41,21 @@ public class Lift extends Subsystem {
 
         // Sigmoid
         if(stickPower > 0) {
+            hold = false;
             outputPower = stickPower / (1 + Math.exp(CONVERSION_SPEED * (pos - (MAX_HEIGHT - (LIMIT_RANGE / 2.0)))));
         } else if(stickPower < 0) {
+            hold = false;
             outputPower = stickPower / (1 + Math.exp(CONVERSION_SPEED * (LIMIT_RANGE/2.0 - pos)));
         } else {
-            outputPower = 0;
+            if(!hold) {
+                holdPosition = pos;
+                hold = true;
+            }
+
+            int error = holdPosition - pos;
+            outputPower = error * HOLD_POS_GAIN;
+
+//            outputPower = 0;
         }
 
         // Trapezoidal/Linear
