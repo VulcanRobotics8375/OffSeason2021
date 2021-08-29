@@ -47,7 +47,7 @@ public class Lift extends Subsystem {
             hold = false;
             outputPower = stickPower / (1 + Math.exp(CONVERSION_SPEED * (LIMIT_RANGE/2.0 - pos)));
         } else {
-            if(!hold) {
+            if(!hold && pos > LIMIT_RANGE) {
                 holdPosition = pos;
                 hold = true;
             }
