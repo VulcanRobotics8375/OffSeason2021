@@ -7,8 +7,6 @@ import org.firstinspires.ftc.teamcode.robotcorelib.util.Subsystem;
 public class Intake extends Subsystem {
     private DcMotor intake;
 
-    private double intakePower;
-
     public void init(){
         intake = hardwareMap.dcMotor.get("odo_right");
     }

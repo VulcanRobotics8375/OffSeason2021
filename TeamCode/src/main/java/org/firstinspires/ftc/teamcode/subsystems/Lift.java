@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -11,20 +9,18 @@ import org.firstinspires.ftc.teamcode.robotcorelib.util.Subsystem;
 public class Lift extends Subsystem {
     private DcMotor lift;
     private Servo release;
-    private double stickPower;
+
     private boolean hold = false;
     private int holdPosition;
-    private final double HOLD_POS_GAIN = 0.01;
-
-    private final double CONVERSION_SPEED = 0.02;
-    private final int LIMIT_RANGE = 400;
-    private final int MAX_HEIGHT = 6000;
-    private final int L_HIGH = MAX_HEIGHT - LIMIT_RANGE;
-
-    private final double CLOSED_POS = 1.0;
-    private final double OPENED_POS = 0.5;
     private boolean open = false;
     private boolean buttonPress = false;
+
+    private final double HOLD_POS_GAIN = 0.02;
+    private final int LIMIT_RANGE = 400;
+    private final int MAX_HEIGHT = 6000;
+    private final double CLOSED_POS = 1.0;
+    private final double OPENED_POS = 0.5;
+    private final double CONVERGENCE_SPEED = 8.0 / (double) LIMIT_RANGE;
 
 
     public void init(){
@@ -40,14 +36,15 @@ public class Lift extends Subsystem {
         double outputPower;
 
         // Sigmoid
+        //value to tune here is the numerator-- higher number == faster acceleration curve
         if(stickPower > 0) {
             hold = false;
-            outputPower = stickPower / (1 + Math.exp(CONVERSION_SPEED * (pos - (MAX_HEIGHT - (LIMIT_RANGE / 2.0)))));
+            outputPower = stickPower / (1 + Math.exp(CONVERGENCE_SPEED * (pos - (MAX_HEIGHT - (LIMIT_RANGE / 2.0)))));
         } else if(stickPower < 0) {
             hold = false;
-            outputPower = stickPower / (1 + Math.exp(CONVERSION_SPEED * (LIMIT_RANGE/2.0 - pos)));
+            outputPower = stickPower / (1 + Math.exp(CONVERGENCE_SPEED * (LIMIT_RANGE/2.0 - pos)));
         } else {
-            if(!hold && pos > LIMIT_RANGE) {
+            if(!hold) {
                 holdPosition = pos;
                 hold = true;
             }
@@ -55,7 +52,6 @@ public class Lift extends Subsystem {
             int error = holdPosition - pos;
             outputPower = error * HOLD_POS_GAIN;
 
-//            outputPower = 0;
         }
 
         lift.setPower(outputPower);
@@ -71,6 +67,9 @@ public class Lift extends Subsystem {
         } else {
             release.setPosition(CLOSED_POS);
         }
+        telemetry.addData("lift pos", pos);
+        telemetry.addData("hold", hold);
+
     }
 
     public void test(double stickPower) {
