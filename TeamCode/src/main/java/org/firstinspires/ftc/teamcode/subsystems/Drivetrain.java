@@ -3,6 +3,9 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.robotcorelib.util.JoystickCurve;
+import org.firstinspires.ftc.teamcode.robotcorelib.math.MathUtils;
+import org.firstinspires.ftc.teamcode.robotcorelib.util.JoystickCurve;
 import org.firstinspires.ftc.teamcode.robotcorelib.util.Subsystem;
 
 public class Drivetrain extends Subsystem {
@@ -40,14 +43,28 @@ public class Drivetrain extends Subsystem {
 
 
     public void mechanumDrive(double forward, double strafe, double turn) {
+        double multiplier = 2.0 / Math.sqrt(2.0);
         double theta = Math.atan2(forward, strafe) - Math.PI / 4.0;
+        forward = MathUtils.joystickCurve(forward, JoystickCurve.MODIFIED_CUBIC);
+        strafe = MathUtils.joystickCurve(strafe, JoystickCurve.MODIFIED_CUBIC);
+//        turn = MathUtils.joystickCurve(turn, JoystickCurve.MODIFIED_CUBIC);
+
+        double magnitude = Math.abs(forward) + Math.abs(strafe) + Math.abs(turn);
+        if(magnitude > 1) {
+            forward *= magnitude;
+            strafe *= magnitude;
+            turn *= magnitude;
+        }
+
         // Godly Math Trick: sin(x+pi/4) = cos(x-pi/4)
-        double hyp = Math.hypot(strafe, forward);
-        double speed = (hyp/1.07)*(0.62*Math.pow(hyp, 2)+0.45);
+        double speed = multiplier * Math.hypot(strafe, forward);
+
         double flSpeed = speed * Math.sin(theta) + turn;
         double frSpeed = speed * Math.cos(theta) - turn;
         double blSpeed = speed * Math.cos(theta) + turn;
         double brSpeed = speed * Math.sin(theta) - turn;
+
+
         setPowers(flSpeed, frSpeed, blSpeed, brSpeed);
     }
 

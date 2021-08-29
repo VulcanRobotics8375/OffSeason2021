@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robotcorelib.math;
 
+import org.firstinspires.ftc.teamcode.robotcorelib.util.JoystickCurve;
 import org.firstinspires.ftc.teamcode.robotcorelib.util.Point;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class MathUtils {
      * @param curveType curve type based on what drivers want
      * @return scaled joystick input. All inputs should be in the range [-1,1] to scale correctly.
      */
-    public double joystickCurve(double in, JoystickCurve curveType) {
+    public static double joystickCurve(double in, JoystickCurve curveType) {
         switch (curveType) {
             case CUBIC:
                 return pow(in, 3);
@@ -202,7 +203,3 @@ public class MathUtils {
 
 }
 
-enum JoystickCurve {
-    CUBIC,
-    MODIFIED_CUBIC
-}
