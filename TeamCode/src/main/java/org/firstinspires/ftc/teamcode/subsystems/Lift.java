@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robotcorelib.util.Subsystem;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class Lift extends Subsystem {
     private DcMotor lift;
     private Servo release;
@@ -15,12 +16,12 @@ public class Lift extends Subsystem {
     private boolean open = false;
     private boolean buttonPress = false;
 
-    private final double HOLD_POS_GAIN = 0.02;
+    private final double HOLD_POS_GAIN = 0.005;
     private final int LIMIT_RANGE = 400;
-    private final int MAX_HEIGHT = 6000;
+    private final int MAX_HEIGHT = 5500;
+    private final double CONVERGENCE_SPEED = 8.0 / (double) LIMIT_RANGE;
     private final double CLOSED_POS = 1.0;
     private final double OPENED_POS = 0.5;
-    private final double CONVERGENCE_SPEED = 8.0 / (double) LIMIT_RANGE;
 
 
     public void init(){
@@ -67,8 +68,8 @@ public class Lift extends Subsystem {
         } else {
             release.setPosition(CLOSED_POS);
         }
-        telemetry.addData("lift pos", pos);
-        telemetry.addData("hold", hold);
+//        telemetry.addData("lift pos", pos);
+//        telemetry.addData("hold", hold);
 
     }
 
