@@ -11,6 +11,37 @@ import java.util.ArrayList;
 
 //Configuration class for all subsystems to interface with the system properly.
 public class RobotConfig {
+
+    /*
+    HardwareMap Reference:
+    MOTORS:
+        Control Hub Ports:
+            0 = front_left
+            1 = front_right
+            2 = back_left
+            3 = back_right
+        Expansion Hub Ports:
+            0 = odo_left
+            1 = odo_strafe
+            2 = odo_right
+            3 = lift
+    SERVOS:
+        Control Hub:
+
+        Expansion Hub:
+            0 = release
+    I2C SENSORS:
+        Control Hub:
+
+        Expansion Hub:
+
+    ANALOG PORTS:
+        Control Hub:
+
+        Expansion Hub:
+        
+     */
+
     public ArrayList<Subsystem> subsystems = new ArrayList<>();
 
     //localization
