@@ -15,7 +15,7 @@ public class MathUtils {
      * @param angle input angle in radians
      * @return constrained output
      */
-    public double angleWrap(double angle) {
+    public static double angleWrap(double angle) {
         while(angle <= -PI) {
             angle += 2.0 * PI;
         }
@@ -30,7 +30,7 @@ public class MathUtils {
      * @param angle input angle in radians
      * @return constrained output
      */
-    public double fullAngleWrap(double angle) {
+    public static double fullAngleWrap(double angle) {
         while(angle <= 0) {
             angle += 2.0 * PI;
         }
