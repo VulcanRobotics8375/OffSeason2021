@@ -18,7 +18,7 @@ public class Lift extends Subsystem {
 
     private final double HOLD_POS_GAIN = 0.005;
     private final int LIMIT_RANGE = 400;
-    private final int MAX_HEIGHT = 5500;
+    private final int MAX_HEIGHT = 6000;
     private final double CONVERGENCE_SPEED = 8.0 / (double) LIMIT_RANGE;
     private final double CLOSED_POS = 1.0;
     private final double OPENED_POS = 0.5;
