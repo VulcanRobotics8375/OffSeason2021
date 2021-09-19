@@ -16,12 +16,12 @@ public class Lift extends Subsystem {
     private boolean open = false;
     private boolean buttonPress = false;
 
-    private final double HOLD_POS_GAIN = 0.005;
-    private final int LIMIT_RANGE = 400;
-    private final int MAX_HEIGHT = 5500;
+    private final double HOLD_POS_GAIN = 0.0005;
+    private final int LIMIT_RANGE = 300;
+    private final int MAX_HEIGHT = 600;
     private final double CONVERGENCE_SPEED = 8.0 / (double) LIMIT_RANGE;
-    private final double CLOSED_POS = 1.0;
-    private final double OPENED_POS = 0.5;
+    private final double CLOSED_POS = 0.05;
+    private final double OPENED_POS = 0.8;
 
 
     public void init(){
@@ -35,6 +35,9 @@ public class Lift extends Subsystem {
     public void run(double stickPower, boolean buttonPress) {
         int pos = lift.getCurrentPosition();
         double outputPower;
+        if(stickPower < 0) {
+            stickPower *= 0.2;
+        }
 
         // Sigmoid
         //value to tune here is the numerator-- higher number == faster acceleration curve
@@ -68,7 +71,7 @@ public class Lift extends Subsystem {
         } else {
             release.setPosition(CLOSED_POS);
         }
-//        telemetry.addData("lift pos", pos);
+        telemetry.addData("lift pos", pos);
 //        telemetry.addData("hold", hold);
 
     }

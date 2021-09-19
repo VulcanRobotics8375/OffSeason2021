@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.robotcorelib.util.Subsystem;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
+import org.firstinspires.ftc.teamcode.subsystems.Carousel;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,9 @@ public class RobotConfig {
 
         Expansion Hub:
             0 = release
+            4 = intake_wall
+            5 = duck_servo
+
     I2C SENSORS:
         Control Hub:
 
@@ -39,7 +43,7 @@ public class RobotConfig {
         Control Hub:
 
         Expansion Hub:
-        
+
      */
 
     public ArrayList<Subsystem> subsystems = new ArrayList<>();
@@ -51,6 +55,7 @@ public class RobotConfig {
     public Drivetrain drivetrain;
     public Intake intake;
     public Lift lift;
+    public Carousel carousel;
 
     //initialization of subsystems goes here
     public void init() {
@@ -58,6 +63,7 @@ public class RobotConfig {
         drivetrain = new Drivetrain();
         intake = new Intake();
         lift = new Lift();
+        carousel = new Carousel();
 
     }
 

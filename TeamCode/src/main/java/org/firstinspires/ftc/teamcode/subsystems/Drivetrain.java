@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.robotcorelib.util.Subsystem;
 public class Drivetrain extends Subsystem {
 
     private DcMotor fl, fr, bl, br;
+    public static final DriveMode driveMode = DriveMode.TANK;
 
 
     @Override
@@ -28,10 +29,18 @@ public class Drivetrain extends Subsystem {
         bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-        fl.setDirection(DcMotorSimple.Direction.FORWARD);
-        fr.setDirection(DcMotorSimple.Direction.REVERSE);
-        bl.setDirection(DcMotorSimple.Direction.FORWARD);
-        br.setDirection(DcMotorSimple.Direction.REVERSE);
+        if(Drivetrain.driveMode == DriveMode.TANK) {
+            fl.setDirection(DcMotorSimple.Direction.REVERSE);
+            fr.setDirection(DcMotorSimple.Direction.FORWARD);
+            bl.setDirection(DcMotorSimple.Direction.REVERSE);
+            br.setDirection(DcMotorSimple.Direction.FORWARD);
+        }
+        else if(Drivetrain.driveMode == DriveMode.MECANUM) {
+            fl.setDirection(DcMotorSimple.Direction.FORWARD);
+            fr.setDirection(DcMotorSimple.Direction.REVERSE);
+            bl.setDirection(DcMotorSimple.Direction.FORWARD);
+            br.setDirection(DcMotorSimple.Direction.REVERSE);
+        }
     }
 
     public void setPowers(double fl, double fr, double bl, double br) {
@@ -41,6 +50,16 @@ public class Drivetrain extends Subsystem {
         this.br.setPower(br);
     }
 
+    public void tankDrive(double forward, double turn) {
+        forward = MathUtils.joystickCurve(forward, JoystickCurve.MODIFIED_CUBIC);
+        turn = MathUtils.joystickCurve(turn, JoystickCurve.MODIFIED_CUBIC);
+         double magnitude = Math.abs(forward) + Math.abs(turn);
+         if(magnitude > 1) {
+             forward *= 1 / magnitude;
+             turn *= 1 / magnitude;
+         }
+        setPowers(forward+turn, forward-turn, forward+turn, forward-turn);
+    }
 
     public void mechanumDrive(double forward, double strafe, double turn) {
         double multiplier = 2.0 / Math.sqrt(2.0);
@@ -51,9 +70,9 @@ public class Drivetrain extends Subsystem {
 
         double magnitude = Math.abs(forward) + Math.abs(strafe) + Math.abs(turn);
         if(magnitude > 1) {
-            forward *= magnitude;
-            strafe *= magnitude;
-            turn *= magnitude;
+            forward *= 1 / magnitude;
+            strafe *= 1 / magnitude;
+            turn *= 1 / magnitude;
         }
 
         // Godly Math Trick: sin(x+pi/4) = cos(x-pi/4)
@@ -70,9 +89,9 @@ public class Drivetrain extends Subsystem {
 
     public void setPowers(double[] powers) {
         this.fl.setPower(powers[0]);
-        this.fl.setPower(powers[1]);
-        this.fl.setPower(powers[2]);
-        this.fl.setPower(powers[3]);
+        this.fr.setPower(powers[1]);
+        this.bl.setPower(powers[2]);
+        this.br.setPower(powers[3]);
 
     }
 
@@ -82,4 +101,10 @@ public class Drivetrain extends Subsystem {
         bl.setMode(runMode);
         br.setMode(runMode);
     }
+}
+
+enum DriveMode {
+    TANK,
+    MECANUM
+
 }
